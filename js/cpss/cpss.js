@@ -1,18 +1,18 @@
 /**
- *		krnl js module:
+ *		cpss js module:
  *			cpss.js
  *
  *		desc:
  *			Compatible Post-Sharing System JavaScript.
  *
  *		requires:
- *			jQuery
+ *			jQuery, Magnific Popup
  */
 
-var krnl = ( function( app, $ ) {
+var cpss = ( function( app, $ ) {
 
 	/* define new module */
-	app.cpss = ( function( $ ) {
+	app.js = ( function( $ ) {
 
 		// private vars
 
@@ -96,9 +96,10 @@ var krnl = ( function( app, $ ) {
 	
 	return app; /* return augmented app object */
 	
-}( krnl || {}, jQuery ) ); /* import app if exists, or create new; import jQuery */
+}( cpss || {}, jQuery ) ); /* import app if exists, or create new; import jQuery */
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// register this module for initialization
-krnl.bootstrap.register( krnl.cpss.init );
+jQuery( document ).ready( function() {
+	cpss.js.init();
+} );
