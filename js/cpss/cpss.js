@@ -38,7 +38,7 @@ var krnl = ( function( app, $ ) {
 						if( $( window ).width() < 700 ) {
 							this.st.focus = false;
 						} else {
-							this.st.focus = '#name';
+							this.st.focus = '#cpss_recipient_name';
 						}
 					},
 					open: function() {						
