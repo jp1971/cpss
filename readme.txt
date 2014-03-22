@@ -1,8 +1,8 @@
 === Compatible Post Sharing System ===
-Contributors: JP1971
+Contributors: Jameson Proctor, Athleticsnyc
 Tags: sharing, email
 Requires at least: 3.0.1
-Tested up to: 3.8
+Tested up to: 3.8.1
 Stable tag: trunk
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -32,6 +32,9 @@ See the Usage section for information on incorporating into your theme.
 2. The CPSS settings pane.
 
 == Changelog ==
+
+= 1.1 =
+* Fixed an error in the JavaScript that was causing the popup to fail.
 
 = 1.0 =
 * Initial release
