@@ -15,7 +15,7 @@ The Compatible Post Sharing System plugin provides a shortcode that can be used 
 
 This plugin works in tandem with Akismet to help ensure that the form is not used to send spam email. It utilizes standard browser validation to ensure that both the To Email Address and From Email Address fields are filled with a valid email address before submitting.
 
-Notes: The modal functionality is built using the Magnific Popup jQuery plugin by Dmitry Semenov. The form fields use standard Bootstrap 3 markup.
+Notes: The modal functionality is built using the Magnific Popup jQuery plugin by Dmitry Semenov.
 
 == Installation ==
 
@@ -33,6 +33,10 @@ See the Usage section for information on incorporating into your theme.
 
 == Changelog ==
 
+= 1.2 =
+* Bringing over Bootstrap form styles and prefixing them with id. Bootstrap is no longer needed to style form.
+* Cleaning up readme.
+
 = 1.1 =
 * Fixed an error in the JavaScript that was causing the popup to fail.
 
@@ -41,9 +45,11 @@ See the Usage section for information on incorporating into your theme.
 
 == Usage ==
 
-To add a Compatible Post Sharing System link to a post or page, use the [cpss] shortcode. To use in a template, wrap the shortcode in the `do_shortcode()` function. The shortcode allows for the following options:
+To add a Compatible Post Sharing System link to a post or page, use the [cpss] shortcode. To use in a template, wrap the shortcode in the `do_shortcode()` function. To use in a [Timber](http://jarednova.github.io/timber/) template, which we highly recommend, use the shortcodes filter like so `{{ '[cpss]' | shortcodes }}`.
 
-* link (e.g [cpss link="Email a Friend"]) - This allows you to set the name of the link that opens the CPSS pop-up form. The defualt is 'Email'.
+The shortcode allows for the following options:
+
+* link (e.g [cpss link="Email a Friend"]) - This allows you to set the name of the link that opens the CPSS pop-up form. The default is 'Email'.
 
 * title (e.g [cpss title="Email a Friend This Page"]) - This allows you to set the name of the title that appears at the top of the CPSS pop-up form. The defualt is 'Email This Page'.
 
