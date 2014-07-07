@@ -233,20 +233,32 @@ class KrnlCompatiblePostSharingSystem {
 		return $form;
 	}
 
-	function is_spam_akismet( $form ) {
-		global $akismet_api_host, $akismet_api_port;
-	 
-		if ( ! function_exists( 'akismet_http_post' ) ) {
+	public function is_spam_akismet( $form ) {
+		if ( ! class_exists( 'Akismet' ) ) {
 			return false;
-		} 
+		}
 	 
 		$query_string = http_build_query( $form );
 	 
-		$response = akismet_http_post( $query_string, $akismet_api_host, '/1.1/comment-check', $akismet_api_port );
+		// In dev environment tell Akismet not to learn
+		// @see http://akismet.com/development/api/
+		if ( WP_DEBUG ) {
+			if ( ! defined('AKISMET_TEST_MODE' ) ) {
+				define( 'AKISMET_TEST_MODE', true );
+			}
+	 
+			$is_test_mode = Akismet::is_test_mode();
+		}
+	 
+		$response = Akismet::http_post(
+			$query_string,
+			'comment-check'
+		);
+	 
 		$result = false;
 	 
 		// 'true' is spam
-		if ( 'true' == trim( $response[1] ) ) {
+		if ( 'true' === trim( $response[1] ) ) {
 			$result = true;
 		}
 	 
