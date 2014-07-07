@@ -124,15 +124,24 @@ class KrnlCompatiblePostSharingSystem {
 			$this->section_id
 		);
 
+		add_settings_field(
+			'cpss_css',
+			'Load CSS?',
+			array( $this, 'css_callback' ),
+			$this->options_page_menu_slug,
+			$this->section_id
+		);
+
 		// Register plugin settings
 		// register_setting( $option_group, $option_name, $sanitize_callback );
 		// http://codex.wordpress.org/Function_Reference/register_setting	
 		register_setting ( $this->option_group, 'cpss_subject' );
 		register_setting ( $this->option_group, 'cpss_message' );
+		register_setting ( $this->option_group, 'cpss_css' );
 	}
 
 	public function cpss_section_callback() {
-		echo 'The default values of the Subject and Message fields in the CPSS pop-up can be set using the fields below. These fields support two tags, [page_title] and [url], which will be replaced by the page name and url on the front end.';
+		echo 'The default values of the Subject and Message fields in the CPSS pop-up can be set using the fields below. These fields support two tags, [page_title] and [url], which will be replaced by the page name and url on the front end. From version 1.2 on, CPSS ships with its own CSS so that the form can be be easily styled whether you\'re using Bootstrap 3 or not. To use this CSS, please check the <strong>Load CSS?</strong> checkbox.';
 	}
 
 	public function subject_callback() {
@@ -143,6 +152,14 @@ class KrnlCompatiblePostSharingSystem {
 	public function message_callback() {
 		$message = esc_attr( get_option( 'cpss_message' ) );
 		echo "<textarea name='cpss_message' cols='40' rows='6'>$message</textarea>";
+	}
+
+	public function css_callback() {
+		$css = esc_attr( get_option( 'cpss_css' ) );
+	?>
+		<label for="cpss_css"></label>
+		<input type="checkbox" name="cpss_css" value="1" <?php checked( $css, 1 ); ?> />
+	<?php
 	}
 
 	public function render_options_page() {
@@ -159,13 +176,16 @@ class KrnlCompatiblePostSharingSystem {
 	}
 	
 	public function enqueue_styles() {
-		wp_enqueue_style(
-			'cpss', //$handle
-			plugins_url( '/css/cpss/cpss.css', __FILE__ ),//$src
-			false, //$deps (dependencies)
-			'1.0', //$ver
-			'screen' //$media
-	   	);
+		// Load CPSS CSS based on user input
+		if ( get_option( 'cpss_css' ) == 1 ) {
+			wp_enqueue_style(
+				'cpss', //$handle
+				plugins_url( '/css/cpss/cpss.css', __FILE__ ),//$src
+				false, //$deps (dependencies)
+				'1.0', //$ver
+				'screen' //$media
+		   	);
+		}
 
 	   	wp_enqueue_style(
 			'magnific-popup', //$handle
