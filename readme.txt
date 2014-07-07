@@ -2,7 +2,7 @@
 Contributors: Jameson Proctor, Athleticsnyc
 Tags: sharing, email
 Requires at least: 3.0.1
-Tested up to: 3.8.1
+Tested up to: 3.9.1
 Stable tag: trunk
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,9 +13,13 @@ The Compatible Post Sharing System allows site vistors to share posts and pages 
 
 The Compatible Post Sharing System plugin provides a shortcode that can be used in the post editor or in a template file with the do_shortcode() function. This shortcode outputs a link that opens a modal window on click that contains a form that will allow a site visitor to send an email. The link name and popup heading can be customized with the link and title shortcode attributes. The defaults are 'Email' and 'Email This Page' respectively. The subject and message can be customized via the plugin's settings page.
 
-This plugin works in tandem with Akismet to help ensure that the form is not used to send spam email. It utilizes standard browser validation to ensure that both the To Email Address and From Email Address fields are filled with a valid email address before submitting.
+This plugin works in tandem with Akismet to help ensure that the form is not used to send spam email. In order to take advantage of spam protection, you'll need to be using Akismet 3+. It utilizes standard browser validation to ensure that both the To Email Address and From Email Address fields are filled with a valid email address before submitting.
 
-Notes: The modal functionality is built using the Magnific Popup jQuery plugin by Dmitry Semenov.
+Notes:  
+
+* The modal functionality is built using the Magnific Popup jQuery plugin by Dmitry Semenov.  
+* The form fields use standard Bootstrap 3 markup. The form specific CSS ships with the plugin and can be loaded depending on user input. 
+* The banner image is of the operator's console of an IBM 7094, one of the systems at MIT that ran the CTSS. More information on the IBM 7094 and CTSS can be found at [multicians.org](http://www.multicians.org/thvv/7094.html). The original image is by Arnold Reinhold and is licensed under the [CC BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/).  
 
 == Installation ==
 
@@ -35,6 +39,8 @@ See the Usage section for information on incorporating into your theme.
 
 = 1.2 =
 * Bringing over Bootstrap form styles and prefixing them with id. Bootstrap is no longer needed to style form.
+* Adding checkbox to plugin settings pane to determine whether or not CSS should be loaded.
+* Upgrading Akismet function to work with version 3+.
 * Cleaning up readme.
 
 = 1.1 =
