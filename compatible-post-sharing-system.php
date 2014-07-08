@@ -82,9 +82,13 @@ class KrnlCompatiblePostSharingSystem {
 		register_uninstall_hook( __FILE__, array( 'KrnlCompatiblePostSharingSystem' , 'uninstall' ) );
 	}
 
+	/**
+	 * Add submenu page to the WordPress Settings menu.
+	 * 
+	 * @uses add_options_page http://codex.wordpress.org/Function_Reference/add_options_page
+	 */
 	public function add_plugin_menu() {
-		// Add options page
-		// http://codex.wordpress.org/Function_Reference/add_options_page
+
 		add_options_page( 
 			$this->options_page_title,
 			$this->options_page_menu_title,
@@ -94,10 +98,16 @@ class KrnlCompatiblePostSharingSystem {
 		);
 	}
 
+	/**
+	 * Add settings section and fields to the WordPress Settings submenu page.
+	 * Register settings with WordPress settings API.
+	 * 
+	 * @uses add_settings_section http://codex.wordpress.org/Function_Reference/add_settings_section
+	 * @uses add_settings_field http://codex.wordpress.org/Function_Reference/add_settings_field
+	 * @uses register_setting http://codex.wordpress.org/Function_Reference/register_setting
+	 */
 	public function register_plugin_settings() {
 
-		// Add settings section(s)
-		// http://codex.wordpress.org/Function_Reference/add_settings_section
 		add_settings_section(
 			$this->section_id,
 			$this->section_title,
@@ -105,15 +115,12 @@ class KrnlCompatiblePostSharingSystem {
 			$this->options_page_menu_slug
 		);
 
-		// Add settings field(s)
-		// e.g. add_settings_field( $id, $title, $callback, $page, $section, $args );
-		// http://codex.wordpress.org/Function_Reference/add_settings_field
 		add_settings_field(
-			'cpss_subject',
-			'Subject',
-			array( $this, 'subject_callback' ),
-			$this->options_page_menu_slug,
-			$this->section_id
+			'cpss_subject', // $id
+			'Subject', // $title
+			array( $this, 'subject_callback' ), // $callback
+			$this->options_page_menu_slug, // $page
+			$this->section_id // $section
 		);
 
 		add_settings_field(
@@ -131,29 +138,49 @@ class KrnlCompatiblePostSharingSystem {
 			$this->options_page_menu_slug,
 			$this->section_id
 		);
-
-		// Register plugin settings
-		// register_setting( $option_group, $option_name, $sanitize_callback );
-		// http://codex.wordpress.org/Function_Reference/register_setting	
-		register_setting ( $this->option_group, 'cpss_subject' );
-		register_setting ( $this->option_group, 'cpss_message' );
-		register_setting ( $this->option_group, 'cpss_css' );
+	
+		register_setting( $this->option_group, 'cpss_subject' );
+		register_setting( $this->option_group, 'cpss_message' );
+		register_setting( $this->option_group, 'cpss_css' );
 	}
 
+	/**
+	 * Echoes help text that is displayed at the top of the WordPress Settings submenu page. 
+	 * 
+	 * @return string 
+	 */
 	public function cpss_section_callback() {
 		echo 'The default values of the Subject and Message fields in the CPSS pop-up can be set using the fields below. These fields support two tags, [page_title] and [url], which will be replaced by the page name and url on the front end. From version 1.2 on, CPSS ships with its own CSS so that the form can be be easily styled whether you\'re using Bootstrap 3 or not. To use this CSS, please check the <strong>Load CSS?</strong> checkbox.';
 	}
 
+	/**
+	 * Echoes text field input for cpss_subject option.
+	 * Displays current value if set.
+	 * 
+	 * @return string
+	 */
 	public function subject_callback() {
 		$subject = esc_attr( get_option( 'cpss_subject' ) );
 		echo "<input type='text' size='40' name='cpss_subject' value='$subject'>";
 	}
 
+	/**
+	 * Echoes textarea input for cpss_message option.
+	 * Displays current value if set.
+	 * 
+	 * @return string
+	 */
 	public function message_callback() {
 		$message = esc_attr( get_option( 'cpss_message' ) );
 		echo "<textarea name='cpss_message' cols='40' rows='6'>$message</textarea>";
 	}
 
+	/**
+	 * Echoes checkbox input for cpss_css option.
+	 * Displays current value if set.
+	 * 
+	 * @return string
+	 */
 	public function css_callback() {
 		$css = esc_attr( get_option( 'cpss_css' ) );
 	?>
@@ -162,6 +189,14 @@ class KrnlCompatiblePostSharingSystem {
 	<?php
 	}
 
+	/**
+	 * Passed into add_plugin_menu as a parameter.
+	 * Renders markup for the WordPress Settings submenu page.
+	 *
+	 * @uses settings_fields()
+	 * 
+	 * @return string
+	 */
 	public function render_options_page() {
 	?>
 		<div class="wrap">
@@ -175,6 +210,11 @@ class KrnlCompatiblePostSharingSystem {
 	<?php
 	}
 	
+	/**
+	 * Print styles in header
+	 *
+	 * @uses wp_enqueue_style http://codex.wordpress.org/Function_Reference/wp_enqueue_style
+	 */
 	public function enqueue_styles() {
 		// Load CPSS CSS based on user input
 		if ( get_option( 'cpss_css' ) == 1 ) {
@@ -196,6 +236,11 @@ class KrnlCompatiblePostSharingSystem {
 	   	);
 	}
 
+	/**
+	 * Print scripts in header and footer
+	 *
+	 * @uses wp_enqueue_script http://codex.wordpress.org/Function_Reference/wp_enqueue_script
+	 */
 	public function enqueue_scripts() {
 		wp_enqueue_script(
 			'cpss',//$handle
@@ -215,6 +260,13 @@ class KrnlCompatiblePostSharingSystem {
 		);
 	}
 
+	/**
+	 * Prepares field input from submitted form for spam checking by Akismet
+	 * 
+	 * @param  array $form Compacted field input from submitted form 
+	 * 
+	 * @return array 
+	 */
 	public function prepare_for_akismet( $form ) {
 		$form['comment_type'] = 'contact_form';
 		$form['user_ip']      = preg_replace( '/[^0-9., ]/', '', $this->get_user_ip() );
@@ -265,6 +317,11 @@ class KrnlCompatiblePostSharingSystem {
 		return $result;
 	}
 
+	/**
+	 * Returns user's IP address from the PHP $_SERVER array
+	 * 
+	 * @return string User's IP address
+	 */
 	public function get_user_ip() {
 	 
 		if ( isset( $_SERVER["HTTP_CLIENT_IP"] ) ) {
@@ -330,7 +387,14 @@ class KrnlCompatiblePostSharingSystem {
 		}
 	}	
 
-	public function shortcode( $atts, $content = null ) {
+	/**
+	 *  CPSS shortcode handler
+	 *  
+	 *  @param array|string $atts The attributes passed to the shortcode like link="Email" or title="Email This Page".
+	 *  
+	 *  @return string CPSS from markup
+	 */
+	public function shortcode( $atts ) {
 		extract( shortcode_atts( array(
 			'link' => 'Email',
 			'title' => 'Email This Page'
@@ -381,6 +445,9 @@ class KrnlCompatiblePostSharingSystem {
 		return $cpss;
 	}
 
+	/**
+	 * Deletes cpss_subject, cpss_message and cpss_css options from database on uninstall.
+	 */
 	public function uninstall() {
 
 		// Single site
@@ -389,6 +456,7 @@ class KrnlCompatiblePostSharingSystem {
 			// Delete options
 		    delete_option( 'cpss_subject' );
 		    delete_option( 'cpss_message' );
+		    delete_option( 'cpss_css' );
 		} 
 		// Multisite
 		else 
@@ -399,7 +467,8 @@ class KrnlCompatiblePostSharingSystem {
 		    foreach ( $blog_ids as $blog_id ) {
 	    		// Delete options
 	    	    delete_option( 'cpss_subject' );
-	    	    delete_option( 'cpss_message' );		     
+	    	    delete_option( 'cpss_message' );
+	    	    delete_option( 'cpss_css' );			     
 		    }
 		    switch_to_blog( $original_blog_id );
 		}
