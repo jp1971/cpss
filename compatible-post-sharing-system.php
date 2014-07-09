@@ -46,6 +46,13 @@ class KrnlCompatiblePostSharingSystem {
 	  return self::$instance;
 	}
 
+	/**
+	 * PHP 5 allows developers to declare constructor methods for classes. Classes which have a 
+	 * constructor method call this method on each newly-created object, so it is suitable for 
+	 * any initialization that the object may need before it is used.
+	 *
+	 * http://www.php.net/manual/en/language.oop5.decon.php
+	 */
 	private function __construct() {
 
 		//Define plugin specific variables
@@ -285,6 +292,13 @@ class KrnlCompatiblePostSharingSystem {
 		return $form;
 	}
 
+	/**
+	 * Checks prepared field input from submitted form for spam with Akismet
+	 * 
+	 * @param  array $form Prepared field input prepare_for_akismet() function
+	 * 
+	 * @return bool
+	 */
 	public function is_spam_akismet( $form ) {
 		if ( ! class_exists( 'Akismet' ) ) {
 			return false;
@@ -335,6 +349,12 @@ class KrnlCompatiblePostSharingSystem {
 		return $user_ip;
 	}
 
+	/**
+	 * Prepares field input from submitted form and checks for spam with Akismet
+	 * If spam, an error message is displayed. If not, an email is sent.
+	 * 
+	 * @uses wp_mail() http://codex.wordpress.org/Function_Reference/wp_mail
+	 */
 	public function send_email() {
 
 		// Get $nonce
