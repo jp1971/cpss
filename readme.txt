@@ -14,8 +14,7 @@ The Compatible Post Sharing System allows site vistors to share posts and pages 
 The Compatible Post Sharing System plugin provides a shortcode that can be used in the post editor or in a template file with the do_shortcode() function. This shortcode outputs a link that opens a modal window on click that contains a form that will allow a site visitor to send an email. The link name and popup heading can be customized with the link and title shortcode attributes. The defaults are 'Email' and 'Email This Page' respectively. The subject and message can be customized via the plugin's settings page.
 
 Why Compatible Post Sharing System?
-
-With the introduction of MIT's Compatible Time-Sharing System (CTSS) in 1961 multiple users were able to log into a central system from remote dial-up terminals, and to store and share files on the central disk. Informal methods of using this to pass messages developed and were expanded to create the first system worthy of the name "email".
+> With the introduction of MIT's Compatible Time-Sharing System (CTSS) in 1961 multiple users were able to log into a central system from remote dial-up terminals, and to store and share files on the central disk. Informal methods of using this to pass messages developed and were expanded to create the first system worthy of the name "email".
 
 Notes:  
 * This plugin works in tandem with Akismet to help ensure that the form is not used to send spam email. In order to take advantage of spam protection, you'll need to be using Akismet 3.0.0+.      
