@@ -20,7 +20,7 @@ With the introduction of MIT's Compatible Time-Sharing System (CTSS) in 1961 mul
 Notes:  
 * This plugin works in tandem with Akismet to help ensure that the form is not used to send spam email. In order to take advantage of spam protection, you'll need to be using Akismet 3.0.0+.      
 * The modal functionality is built using the Magnific Popup jQuery plugin by Dmitry Semenov.      
-* The form fields use standard Bootstrap 3 markup. The form specific CSS ships with the plugin and can be loaded depending on user input.      
+* The form fields use standard Bootstrap 3 markup. The form specific CSS ships with the plugin and can be loaded depending on user input in the plugin's settings pane.      
 * The plugin utilizes standard browser validation to ensure that both the To Email Address and From Email Address fields are filled with a valid email address before submitting.      
 * The banner image is of the operator's console of an IBM 7094, one of the systems at MIT that ran the CTSS. More information on the IBM 7094 and CTSS can be found at [multicians.org](http://www.multicians.org/thvv/7094.html). The original image is by Arnold Reinhold and is licensed under the [CC BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/).      
 
@@ -43,7 +43,7 @@ See the Usage section for information on incorporating into your theme.
 = 1.2 =
 * Bringing over Bootstrap form styles and prefixing them with id. Bootstrap is no longer needed to style form.
 * Adding checkbox to plugin settings pane to determine whether or not CSS should be loaded.
-* Upgrading Akismet function to work with version 3+.
+* Upgrading Akismet function to work with version 3.0.0+.
 * Cleaning up readme.
 
 = 1.1 =
