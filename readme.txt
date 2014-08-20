@@ -39,6 +39,9 @@ See the Usage section for information on incorporating into your theme.
 
 == Changelog ==
 
+= 1.3 =
+* The [page_title] tag is now replaced on the front-end when used in the Message field in the CPSS settings pane.
+
 = 1.2 =
 * Bringing over Bootstrap form styles and prefixing them with id. Bootstrap is no longer needed to style form.
 * Adding checkbox to plugin settings pane to determine whether or not CSS should be loaded.

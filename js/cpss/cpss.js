@@ -50,6 +50,7 @@ var cpss = ( function( app, $ ) {
 
 						$( '#cpss_subject' ).val( sub.replace( '[page_title]', ttl ) );
 						$( '#cpss_message' ).val( msg.replace( '[url]', url ) );
+						$( '#cpss_message' ).val( msg.replace( '[page_title]', ttl ) );
 					},
 					close: function() {
 						$( '#cpss-form' ).find( 'input[type=text], input[type=email], textarea' ).val( '' );
