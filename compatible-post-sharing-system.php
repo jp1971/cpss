@@ -421,9 +421,10 @@ class KrnlCompatiblePostSharingSystem {
 			), $atts ) );
 
 			global $wp;
-			$url = home_url( $wp->request );
+			$url = get_permalink();
 			$ttl = get_the_title();
-			$form = '<form id="cpss-form" class="mfp-hide cpss-popup">[content]</form>';
+			$id = get_the_id();
+			$form = '<form id="cpss-form-' . $id . '" class="mfp-hide cpss-popup">[content]</form>';
 			$template = '<form id="cpss-form" class="cpss-popup">[content]</form>';
 
 		ob_start();
@@ -432,35 +433,35 @@ class KrnlCompatiblePostSharingSystem {
 		<fieldset style="border:0;">
 			<div class="form-group inline left">
 				<label for="cpss_recipient_name">To Name</label>
-			  	<input type="text" class="form-control" id="cpss_recipient_name" placeholder="Recipient Name">
+			  	<input type="text" class="form-control cpss_recipient_name" placeholder="Recipient Name">
 			</div>
 			<div class="form-group inline">
 				<label for="cpss_recipient_email">To Email Address</label>
-			  	<input type="email" class="form-control" id="cpss_recipient_email" placeholder="recipient@something.com">
+			  	<input type="email" class="form-control cpss_recipient_email" placeholder="recipient@something.com">
 			</div>
 			<div class="form-group inline left">
 				<label for="cpss_sender_name">From Name</label>
-			  	<input type="text" class="form-control" id="cpss_sender_name" placeholder="Sender Name">
+			  	<input type="text" class="form-control cpss_sender_name" placeholder="Sender Name">
 			</div>
 			<div class="form-group inline">
 				<label for="cpss_sender_email">From Email Address</label>
-			  	<input type="email" class="form-control" id="cpss_sender_email" placeholder="sender@something.com">
+			  	<input type="email" class="form-control cpss_sender_email" placeholder="sender@something.com">
 			</div>
 			<div class="form-group">
 				<label for="cpss_subject">Subject</label>
-			  	<input type="text" class="form-control" id="cpss_subject" value="<?php echo esc_attr( get_option( 'cpss_subject' ) ); ?>">
+			  	<input type="text" class="form-control cpss_subject" value="<?php echo esc_attr( get_option( 'cpss_subject' ) ); ?>">
 			</div>
 			<div class="form-group">
 				<label for="cpss_message">Message</label>
-			  	<textarea class="form-control" id="cpss_message" rows="5"><?php echo esc_attr( get_option( 'cpss_message' ) ); ?></textarea>
+			  	<textarea class="form-control cpss_message" rows="5"><?php echo esc_attr( get_option( 'cpss_message' ) ); ?></textarea>
 			</div>
-			<button type="submit" id="cpss_submit" class="btn btn-primary">Send</button>
+			<button type="submit" class="btn btn-primary cpss_submit">Send</button>
 		</fieldset>
 		<?php
 		$form_contents = ob_get_clean();
 		$form = str_replace( '[content]', $form_contents, $form );
 		$template = str_replace( '[content]', $form_contents, $template );
-		$cpss = "<a class='cpss-form' href='#cpss-form' data-title='' data-url='" . esc_attr( $url ) . "'>$link</a>" . $form . "<script id='cpss-template' type='text/template'>$template</script>";
+		$cpss = "<a class='cpss-form' href='#cpss-form-$id' data-title='" . esc_attr( $ttl ) . "' data-url='" . esc_attr( $url ) . "'>$link</a>" . $form . "<script id='cpss-template' type='text/template'>$template</script>";
 
 		return $cpss;
 	}

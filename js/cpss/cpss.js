@@ -1,29 +1,20 @@
-/**
- *		cpss js module:
- *			cpss.js
- *
- *		desc:
- *			Compatible Post-Sharing System JavaScript.
- *
- *		requires:
- *			jQuery, Magnific Popup
- */
+//	cpss js module:
+//		cpss.js
+
+//	desc:
+//		Compatible Post-Sharing System JavaScript.
+
+//	requires:
+//		jQuery, Magnific Popup
 
 var cpss = ( function( app, $ ) {
 
 	/* define new module */
 	app.js = ( function( $ ) {
 
-		// private vars
-
 		/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 		function _init() {
-
-			$( 'a.cpss-form' ).attr( 'data-title',
-				function() {
-					return encodeURI( document.title );
-				});
 
 			$( '.cpss-form' ).magnificPopup( {
 				type: 'inline',
@@ -43,46 +34,47 @@ var cpss = ( function( app, $ ) {
 					},
 					open: function() {						
 						
-						var ttl = decodeURI( $( 'a.cpss-form' ).attr( 'data-title' ) ),
-							url = $( 'a.cpss-form' ).attr( 'data-url' ),
-							sub = ( $( '#cpss_subject' ).val() ),
-							msg = ( $( '#cpss_message' ).val() );
+						console.log ( this );
+						var ttl = decodeURI( $( this.currItem.el ).attr( 'data-title' ) ),
+							url = $( this.currItem.el ).attr( 'data-url' ),
+							sub = ( $( '.cpss_subject' ).val() ),
+							msg = ( $( '.cpss_message' ).val() );
 
-						$( '#cpss_subject' ).val( sub.replace( '[page_title]', ttl ) );
-						$( '#cpss_message' ).val( msg.replace( '[url]', url ) );
-						$( '#cpss_message' ).val( msg.replace( '[page_title]', ttl ) );
+						$( '.cpss_subject' ).val( sub.replace( '[page_title]', ttl ) );
+						msg = msg.replace( '[url]', url );
+						$( '.cpss_message' ).val( msg.replace( '[page_title]', ttl ) );
 					},
 					close: function() {
-						$( '#cpss-form' ).find( 'input[type=text], input[type=email], textarea' ).val( '' );
-						$( '#cpss-form' ).html( $( '#cpss-template' ).html() );						
+						$( 'form[id^=cpss-form-]' ).find( 'input[type=text], input[type=email], textarea' ).val( '' );
+						$( 'form[id^=cpss-form-]' ).html( $( '#cpss-template' ).html() );						
 					}
 				}
 			} );
 
-			$( '#cpss-form' ).submit( function( event ) {
-				var nonce = cpss_ajax.nonce,
-					to = ( $( '#cpss_recipient_name' ).val() ),
-					theirs = ( $( '#cpss_recipient_email' ).val() ),
-					from  = ( $( '#cpss_sender_name' ).val() ),
-					yours = ( $( '#cpss_sender_email' ).val() ),
-					subject = ( $( '#cpss_subject' ).val() ),
-					message = ( $( '#cpss_message').val() );
+			$( 'form[id^=cpss-form-]' ).submit( function( event ) {
+				var $this = $( this ),
+					nonce = cpss_ajax.nonce,
+					to = ( $( '.cpss_recipient_name' ).val() ),
+					theirs = ( $( '.cpss_recipient_email' ).val() ),
+					from  = ( $( '.cpss_sender_name' ).val() ),
+					yours = ( $( '.cpss_sender_email' ).val() ),
+					subject = ( $( '.cpss_subject' ).val() ),
+					message = ( $( '.cpss_message' ).val() );
 
 			  	$.ajax({
 			  	    url: cpss_ajax.url,
 			  	    dataType:'json',
 			  	    data: ( {action:'cpss_send_email', nonce:nonce, to:to, theirs:theirs, from:from, yours:yours, subject:subject, message:message} ),
 			  	    success: function( json ) {
-			  	    	$( '#cpss-form fieldset' ).css( 'display', 'none' );	
-			  	    	$( '#cpss-form').append( '<div class="cpss_json_msg">' + json + '</div>' );
+			  	    	$this.find( 'fieldset' ).css( 'display', 'none' );	
+			  	    	$this.append( '<div class="cpss_json_msg">' + json + '</div>' );
 			  	    },
 			  	    error: function( jqXHR, textStatus, errorThrown ) {
-			  	    	$( '#cpss-form fieldset' ).css( 'display', 'none' );	
-			  	    	$( '#cpss-form').append( '<div class="cpss_json_msg">There was a problem sending your messsage. Please try again.</div>' );
+			  	    	$this.find( 'fieldset' ).css( 'display', 'none' );	
+			  	    	$this.append( '<div class="cpss_json_msg">There was a problem sending your messsage. Please try again.</div>' );
 			  	    }
 			  	});
 			  	event.preventDefault();
-			  	// $.magnificPopup.close();
 			} );		
 		}
 
