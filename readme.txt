@@ -41,6 +41,7 @@ See the Usage section for information on incorporating into your theme.
 
 = 1.3 =
 * The [page_title] tag is now replaced on the front-end when used in the Message field in the CPSS settings pane.
+* CPSS can now be used in a loop. IMPORTANT!!! This change required the id #cpss-form to unique ids (i.e. #cpss-form-1, cpss-form-2, etc.). This was addressed in the CSS that ships with the plugin. However, if you are using the id #cpss-form in your custom CSS, you will need to change it from #cpss-form to form[id*='cpss-form-'].
 
 = 1.2 =
 * Bringing over Bootstrap form styles and prefixing them with id. Bootstrap is no longer needed to style form.
