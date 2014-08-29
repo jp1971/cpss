@@ -19,7 +19,6 @@ var cpss = ( function( app, $ ) {
 			$( '.cpss-form' ).magnificPopup( {
 				type: 'inline',
 				preloader: false,
-				focus: '#their_email',
 
 				// When element is focused, some mobile browsers in some cases zoom in.
 				// It does not look nice, so we disable it:
@@ -29,12 +28,11 @@ var cpss = ( function( app, $ ) {
 						if( $( window ).width() < 700 ) {
 							this.st.focus = false;
 						} else {
-							this.st.focus = '#cpss_recipient_name';
+							this.st.focus = '.cpss_recipient_name';
 						}
 					},
 					open: function() {						
 						
-						console.log ( this );
 						var ttl = decodeURI( $( this.currItem.el ).attr( 'data-title' ) ),
 							url = $( this.currItem.el ).attr( 'data-url' ),
 							sub = ( $( '.cpss_subject' ).val() ),
