@@ -371,7 +371,7 @@ class KrnlCompatiblePostSharingSystem {
 			$from = sanitize_text_field( $_GET['from'] );
 			$yours = sanitize_email( $_GET['yours'] );
 			$subject = sanitize_text_field( $_GET['subject'] );
-			$message = wp_kses( $_GET['message'] );
+			$message = wp_kses_post( $_GET['message'] );
 
 			// Check for spam
 			$fields = array(
