@@ -11,6 +11,8 @@ The Compatible Post Sharing System allows site vistors to share posts and pages 
 
 == Description ==
 
+**To support usage in a loop, this update changesthe id #cpss-form to unique ids (i.e. #cpss-form-1, cpss-form-2, etc.). This was addressed in the CSS that ships with the plugin. However, if you are using the id #cpss-form in your custom CSS, you will need to change it from #cpss-form to form[id*='cpss-form-'].**
+
 The Compatible Post Sharing System plugin provides a shortcode that can be used in the post editor or in a template file with the do_shortcode() function. This shortcode outputs a link that opens a modal window on click that contains a form that will allow a site visitor to send an email. The link name and popup heading can be customized with the link and title shortcode attributes. The defaults are 'Email' and 'Email This Page' respectively. The subject and message can be customized via the plugin's settings page.
 
 Why Compatible Post Sharing System?

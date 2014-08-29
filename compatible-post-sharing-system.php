@@ -2,7 +2,7 @@
 /*
 Plugin Name: Compatible Post-Sharing System
 Description: The Compatible Post Sharing System allows site visitors to share posts and pages via email.
-Version: 1.2
+Version: 1.3
 Author: Jameson Proctor, Athleticsnyc
 Author URI: http://jp1971.com/, http://athleticsnyc.com
 License: GPL2
